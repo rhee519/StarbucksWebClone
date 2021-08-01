@@ -16,8 +16,10 @@ searchInputElement.addEventListener("blur", function (event) {
   searchInputElement.setAttribute("placeholder", "");
 });
 
-// Badges
+// scroll controll
 const badgeElement = document.querySelector("header .badges");
+const toTopElement = document.querySelector("#to-top");
+
 window.addEventListener(
   "scroll",
   _.throttle(function () {
@@ -28,15 +30,29 @@ window.addEventListener(
         opacity: 0,
         display: "none",
       });
+      // Show to-top button
+      gsap.to(toTopElement, 0.3, {
+        x: 0,
+      });
     } else {
       // Show badges
       gsap.to(badgeElement, 0.6, {
         opacity: 1,
         display: "block",
       });
+      //Hide to-top button
+      gsap.to(toTopElement, 0.3, {
+        x: 100,
+      });
     }
   }, 300)
 );
+
+toTopElement.addEventListener("click", function () {
+  gsap.to(window, 0.7, {
+    scrollTo: 0,
+  });
+});
 
 // Fade-in pictures
 const fadeElements = document.querySelectorAll(".visual .fade-in");
@@ -76,6 +92,26 @@ new Swiper(".promotion .swiper-container", {
   },
 });
 
+new Swiper(".awards .swiper-container", {
+  direction: "horizontal",
+  slidesPerView: 5,
+  autoplay: true,
+  loop: true,
+  spaceBetween: 30,
+  // centeredSlides: true,
+  navigation: {
+    prevEl: ".awards .swiper-prev",
+    nextEl: ".awards .swiper-next",
+  },
+});
+
+// TOGGLE PROMOTION
+const prElement = document.querySelector(".promotion");
+const prToggleBtn = document.querySelector(".toggle-promotion");
+prToggleBtn.addEventListener("click", function () {
+  prElement.classList.toggle("hidden");
+});
+
 // FLOATING ANIMATION
 function floatingObject(selector, delay, range) {
   // gsap.to(element, duration, {option});
@@ -101,3 +137,7 @@ spyElements.forEach(function (spyElement) {
     .setClassToggle(spyElement, "show")
     .addTo(new ScrollMagic.Controller());
 });
+
+// DATE (YEAR)
+const thisYear = document.querySelector(".this-year");
+thisYear.textContent = new Date().getFullYear();
