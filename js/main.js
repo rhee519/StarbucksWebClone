@@ -75,3 +75,18 @@ new Swiper(".promotion .swiper-container", {
     nextEl: ".promotion .swiper-next",
   },
 });
+
+// FLOATING ANIMATION
+function floatingObject(selector, delay, range) {
+  // gsap.to(element, duration, {option});
+  gsap.to(selector, Math.random() * 1 + 1.5, {
+    y: range,
+    repeat: -1, // infinitely repeat
+    yoyo: true, // back-n-forth animation
+    ease: Sine.easeInOut,
+    delay: Math.random() * delay,
+  });
+}
+floatingObject(".floating1", 1, 15);
+floatingObject(".floating2", 0.5, 17);
+floatingObject(".floating3", 1.5, 20);
